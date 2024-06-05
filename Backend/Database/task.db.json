@@ -1,0 +1,26 @@
+{
+	"name": "tasksDatabase",
+	"tasks": [
+		{
+			"taskId": 1,
+			"title": "learning",
+			"description": "learning task",
+			"isActive": false,
+			"email": "bhavya@gmail.com"
+		},
+		{
+			"title": "learning2",
+			"description": "learning task",
+			"isActive": true,
+			"taskId": 2,
+			"email": "manish@gmail.com"
+		},
+		{
+			"title": "sample task",
+			"description": "sample task added",
+			"taskId": 3,
+			"isActive": false,
+			"email": "manish@gmail.com"
+		}
+	]
+}

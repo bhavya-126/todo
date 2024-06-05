@@ -1,0 +1,18 @@
+{
+	"name": "user Database",
+	"data": [
+		{
+			"id": 1,
+			"name": "Bhavya",
+			"email": "bhavya@gmail.com",
+			"password": "123456"
+		},
+		{ "name": "Manish", "email": "manish24@gmail.com", "id": 2 },
+		{
+			"name": "Manish",
+			"email": "manish@gmail.com",
+			"password": "12345678",
+			"id": 3
+		}
+	]
+}
