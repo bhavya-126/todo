@@ -1,51 +1,35 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLogIn()" class="login-form">
   <div class="form-group">
     <label for="email" class="form-label">Email</label>
-    <input
-      type="text"
-      name="email"
-      id="email"
-      formControlName="email"
-      class="form-input"
-    />
-    <p
-      class="err"
-      *ngIf="
+    <input type="text" name="email" id="email" formControlName="email" class="form-input" />
+    <p class="err" *ngIf="
         loginForm.controls['email'].hasError('required') &&
         loginForm.controls['email'].dirty
-      "
-    >
+      ">
       Email is required
     </p>
-    <p
-      class="err"
-      *ngIf="
+    <p class="err" *ngIf="
         loginForm.controls['email'].hasError('email') &&
         loginForm.controls['email'].dirty
-      "
-    >
+      ">
       Please enter a valid email
     </p>
   </div>
   <div class="form-group">
     <label for="password" class="form-label">Password</label>
-    <input
-      type="password"
-      name="password"
-      id="password"
-      formControlName="password"
-      class="form-input"
-    />
-    <p
-      class="err"
-      *ngIf="
+    <input type="password" name="password" id="password" formControlName="password" class="form-input" />
+    <p class="err" *ngIf="
         loginForm.controls['password'].hasError('required') &&
         loginForm.controls['password'].dirty
-      "
-    >
+      ">
       Password is a required field
     </p>
   </div>
 
-  <button [disabled]="!loginForm.valid" class="submit-button">Submit</button>
+  <button type="submit" [disabled]="!loginForm.valid" class="submit-button">Submit</button>
+
+  <p>not have an account <a routerLink="/signup">create</a></p>
 </form>
+
+<p>bhavya@gmail.com</p>
+<p>Dumra@2002</p>

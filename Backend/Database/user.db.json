@@ -1,18 +1,23 @@
 {
-	"name": "user Database",
-	"data": [
-		{
-			"id": 1,
-			"name": "Bhavya",
-			"email": "bhavya@gmail.com",
-			"password": "123456"
-		},
-		{ "name": "Manish", "email": "manish24@gmail.com", "id": 2 },
-		{
-			"name": "Manish",
-			"email": "manish@gmail.com",
-			"password": "12345678",
-			"id": 3
-		}
-	]
+    "name": "user Database",
+    "data": [
+        {
+            "id": 1,
+            "name": "Bhavya",
+            "email": "bhavya@gmail.com",
+            "password": "$2b$10$KrpEUVhD0hGotrLDIYk0NeQUabn/aaV/em3M53Rf0OXGZYPa2R4ey"
+        },
+        {
+            "name": "Bhavya",
+            "email": "ibhavyadumra@gmail.com",
+            "password": "$2b$10$KrpEUVhD0hGotrLDIYk0NeQUabn/aaV/em3M53Rf0OXGZYPa2R4ey",
+            "id": 5
+        },
+        {
+            "name": "test",
+            "email": "test@gmail.com",
+            "password": "$2b$10$CpkAL1uOWrVwwSb9bXpYXut5bDKujagOdVkoKZ97UnaBinLzHZirm",
+            "id": 6
+        }
+    ]
 }

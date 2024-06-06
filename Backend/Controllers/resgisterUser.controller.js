@@ -31,7 +31,7 @@ async function encryptPass(password) {
 
 module.exports = (req, res) => {
 	let newUser = req.body;
-	encryptPass('123456');
+	// encryptPass('123456');
 	// encryptPass().then((res) => console.log);
 	try {
 		let users = fs.readFileSync(
@@ -46,6 +46,10 @@ module.exports = (req, res) => {
 			});
 			return;
 		}
+
+		const salt = bcrypt.genSaltSync(10)
+		const hash = bcrypt.hashSync(newUser.password, salt)
+		newUser.password = hash
 
 		//encypt password
 		// await bcrypt.genSalt(10, (err, salt) => {

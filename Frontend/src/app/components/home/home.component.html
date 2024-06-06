@@ -1,0 +1,23 @@
+<app-header></app-header>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Status</th>
+      <th><button type="button" class="btn btn-primary" (click)="router.navigate(['home', 'addTask'])">add new</button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let task of tasks">
+      <td>{{task.title}}</td>
+      <td>{{task.description}}</td>
+      <td>{{task.isActive===true? 'in progress' : 'done'}}</td>
+      <td>
+        <button type="button" class="btn btn-primary" (click)="updateTask(task.taskId)">edit</button>
+        <button type="button" class="btn btn-danger" (click)="deleteTask(task.taskId)">delete</button>
+    </tr>
+  </tbody>
+</table>
+<router-outlet></router-outlet>

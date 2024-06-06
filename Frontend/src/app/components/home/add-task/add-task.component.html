@@ -1,0 +1,30 @@
+<form [formGroup]="taskForm" (ngSubmit)="addTask()" class="task-form">
+  <h3>Add Task</h3>
+  <div class="form-group">
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" formControlName="title" class="form-control">
+    <p class="err" *ngIf="taskForm.controls['title'].hasError('required') && taskForm.controls['title'].dirty">title is
+      a required field</p>
+  </div>
+
+  <div class="form-group">
+    <label for="desc">Description</label>
+    <input type="text" id="desc" name="desc" formControlName="description" class="form-control">
+    <p class="err"
+      *ngIf="taskForm.controls['description'].hasError('required') && taskForm.controls['description'].dirty">
+      description is
+      a required field</p>
+  </div>
+
+  <div class="form-group">
+    <label for="active">Status</label>
+    <select name="active" id="active" formControlName="isActive" class="form-control">
+      <option [value]="true">Active</option>
+      <option [value]="false">Done</option>
+    </select>
+    <p class="err" *ngIf="taskForm.controls['isActive'].hasError('required') && taskForm.controls['isActive'].dirty">
+      isActive is
+      a required field</p>
+  </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
