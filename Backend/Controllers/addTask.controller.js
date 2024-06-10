@@ -26,7 +26,6 @@ module.exports = (req, res) => {
 		taskDb = JSON.parse(taskDb);
 
 		body['taskId'] = generateId(taskDb.tasks);
-		// body['isActive'] = true;
 		body['email'] = user.email;
 
 		taskDb.tasks.push(body);

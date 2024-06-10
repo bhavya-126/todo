@@ -23,7 +23,7 @@ module.exports = (req, res) => {
 
 		if (loggedInUser) {
 
-			console.log("password compare result", bcrypt.compareSync(body.password, loggedInUser.password))
+			// console.log("password compare result", bcrypt.compareSync(body.password, loggedInUser.password))
 
 			if (bcrypt.compareSync(body.password, loggedInUser.password)) {
 				let token = generateToken({
