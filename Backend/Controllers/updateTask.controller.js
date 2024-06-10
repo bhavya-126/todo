@@ -17,7 +17,7 @@ module.exports = (req, res) => {
 		taskDb = JSON.parse(taskDb);
 		let index = taskDb.tasks.findIndex((task) => task.taskId === id);
 
-		if (index<0) {
+		if (index < 0) {
 			res.status(404).json({
 				message: 'task not found',
 			});
@@ -26,8 +26,9 @@ module.exports = (req, res) => {
 
 		body['taskId'] = id;
 		body['email'] = user.email;
+
 		taskDb.tasks[index] = body;
-		console.log(taskDb);
+		// console.log(taskDb);
 		fs.writeFileSync(
 			path.join(__dirname, '../Database/task.db.json'),
 			JSON.stringify(taskDb),

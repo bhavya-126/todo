@@ -26,7 +26,7 @@ module.exports = (req, res) => {
 		taskDb = JSON.parse(taskDb);
 
 		body['taskId'] = generateId(taskDb.tasks);
-		body['isActive'] = true;
+		// body['isActive'] = true;
 		body['email'] = user.email;
 
 		taskDb.tasks.push(body);
@@ -39,6 +39,7 @@ module.exports = (req, res) => {
 		res.status(201).json({
 			message: 'task added succssfully',
 			taskId: body['taskId'],
+			task: body
 		});
 	} catch (err) {
 		res.json({

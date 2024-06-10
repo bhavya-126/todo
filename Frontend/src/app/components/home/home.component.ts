@@ -22,6 +22,13 @@ export class HomeComponent implements OnInit {
   }
 
   getUsers() {
+    this.httpService.tasks.subscribe({
+      next: (res) => {
+        // console.log(res);
+
+        this.tasks = res
+      }
+    })
     this.httpService.getTasks().subscribe({
       next: (res: getTasksRes) => {
         this.tasks = res.tasks;
@@ -34,8 +41,12 @@ export class HomeComponent implements OnInit {
   }
 
 
-
+  addTask() {
+    this.httpService.updateFlag = false
+    this.router.navigate(['home', 'addTask'])
+  }
   updateTask(id: number) {
+    this.httpService.updateFlag = true
     this.router.navigate(['home', 'addTask'], { queryParams: { id } })
   }
 
@@ -49,11 +60,14 @@ export class HomeComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-        this.httpService.tasks.subscribe({
-          next: (res) => {
-            this.httpService.tasks.next(res.filter((task) => task.id !== id))
-          }
-        })
+        this.tasks = this.tasks.filter(task => task.taskId !== id)
+        this.httpService.tasks.next(this.tasks)
+        // this.httpService.tasks.subscribe({
+        //   next: (res) => {
+
+        //     this.httpService.tasks.next(res.filter((task) => +task.id !== +id))
+        //   }
+        // })
         // this.getUsers()
 
       },

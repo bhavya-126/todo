@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ErrorRes } from 'src/app/interface/errRes';
 import { getTasksRes } from 'src/app/interface/getTaskRes';
@@ -20,6 +20,13 @@ interface param {
   styleUrls: ['./add-task.component.css']
 })
 export class AddTaskComponent implements OnInit {
+  constructor() {
+    this.httpService.tasks.subscribe({
+      next: (res) => {
+        this.tasks = res
+      }
+    })
+  }
   formBuilder: FormBuilder = new FormBuilder();
   httpService: HttpService = inject(HttpService)
   router: Router = inject(Router)
@@ -30,11 +37,10 @@ export class AddTaskComponent implements OnInit {
   taskForm = this.formBuilder.group({
     title: ['', [Validators.required]],
     description: ['', [Validators.required]],
-    isActive: [true, { notNull: true }, [Validators.required]]
+    isActive: [true, [Validators.required]]
   });
   id: number
   selectedTask: Tasks
-
 
   ngOnInit() {
     // this.httpService.getTasks().subscribe({
@@ -45,9 +51,14 @@ export class AddTaskComponent implements OnInit {
     //     console.log(err);
     //   }
     // })
-    this.httpService.tasks.subscribe({
-      next: (res) => { }
-    })
+    // this.httpService.tasks.subscribe({
+    //   next: (res) => {
+    //     this.tasks = res
+    //   }
+    // })
+    // console.log(this.tasks);
+
+
 
     this.activeRoute.queryParamMap.subscribe((params: any) => {
       this.id = +params.params.id;
@@ -68,10 +79,17 @@ export class AddTaskComponent implements OnInit {
 
   addTask() {
 
-    if (this.selectedTask) {
-      console.log(this.taskForm.value);
+    let data = {
+      title: this.taskForm.value.title,
+      description: this.taskForm.value.description,
+      isActive: String(this.taskForm.value.isActive) === 'true' ? true : false
+    }
 
-      this.httpService.updateTask(this.taskForm.value, this.id).subscribe({
+    console.log("form data", data);
+
+    if (this.httpService.updateFlag) {
+
+      this.httpService.updateTask(data, this.id).subscribe({
         next: (res: ErrorRes) => {
           Swal.fire({
             position: "top-end",
@@ -80,8 +98,16 @@ export class AddTaskComponent implements OnInit {
             showConfirmButton: false,
             timer: 1500
           });
+          let index = this.tasks.findIndex(task => task.taskId === this.id)
+          this.tasks[index].isActive = data.isActive
+          this.tasks[index].title = data.title
+          this.tasks[index].description = data.description
+
+          this.httpService.tasks.next(this.tasks)
+
           this.taskForm.reset()
-          this.httpService.onChanges()
+          this.httpService.updateFlag = false
+
           this.router.navigate(['/home']);
 
         },
@@ -97,9 +123,9 @@ export class AddTaskComponent implements OnInit {
       return
     }
 
-
-    this.httpService.addTask(this.taskForm.value).subscribe({
-      next: (res: { message: string, taskId: number }) => {
+    this.httpService.updateFlag = false
+    this.httpService.addTask(data).subscribe({
+      next: (res: { message: string, taskId: number, task: Tasks }) => {
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -107,22 +133,20 @@ export class AddTaskComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         });
-        this.httpService.tasks.subscribe((tasks) => {
-          let newTask = this.taskForm.value;
-          newTask['taskId'] = res.taskId;
-          newTask['email'] = localStorage.getItem('email')
-          this.httpService.tasks.next([...tasks, newTask])
-        })
-        // this.httpService.onChanges()
+        // console.log("task added", res.task);
+
+        this.tasks.push(res.task);
+        this.httpService.tasks.next(this.tasks)
+
         this.taskForm.reset()
         this.router.navigate(['/home']);
 
       },
-      error: (err: ErrorRes) => {
+      error: (err: { error: { message } }) => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: err.message
+          text: err.error.message,
         });
       }
     }

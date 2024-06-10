@@ -15,7 +15,7 @@ module.exports = (req, res) => {
 		taskDb = JSON.parse(taskDb);
 		let index = taskDb.tasks.findIndex((task) => task.taskId === id);
 
-		if (!index) {
+		if (index === undefined) {
 			res.status(404).json({
 				message: 'task not found',
 			});
@@ -23,9 +23,23 @@ module.exports = (req, res) => {
 		}
 
 		let deletedTask = taskDb.tasks[index];
-		taskDb.tasks = taskDb.tasks
-			.slice(0, index)
-			.concat(taskDb.tasks.slice(index + 1));
+		if (taskDb.tasks.length === 0) {
+			res.status(404).json({
+				message: "no data found"
+			})
+			return
+		}
+
+		else if (index === 0) {
+			taskDb.tasks = taskDb.tasks.slice(1)
+		}
+
+		else {
+
+			taskDb.tasks = taskDb.tasks
+				.slice(0, index)
+				.concat(taskDb.tasks.slice(index + 1));
+		}
 
 		// console.log(taskDb);
 		fs.writeFileSync(

@@ -33,7 +33,7 @@ package-lock.json
 .history/*
 
 # Miscellaneous
-/.angular/cache
+*/.angular/*
 .sass-cache/
 /connect.lock
 /coverage

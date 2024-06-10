@@ -16,13 +16,15 @@ export class HttpService implements OnInit {
   http: HttpClient = inject(HttpClient);
 
   tasks = new BehaviorSubject([])
+  updateFlag: boolean = false
+  addFlag: boolean = false
 
   ngOnInit() {
-    this.getTasks().subscribe({
-      next: (res: getTasksRes) => {
-        this.tasks.next(res.tasks)
-      }
-    })
+    // this.http.get(url.BASE_URL + url.TASKS, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }).subscribe({
+    //   next: (res: getTasksRes) => {
+    //     this.tasks.next(res.tasks)
+    //   }
+    // })
     // this.tasks.subscribe((data) => {
 
     //   console.log("tasks:", data);
